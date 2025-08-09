@@ -1,0 +1,44 @@
+name: Run Common SonarCloud Workflow
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  check-secrets:
+    name: Check Required Secrets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify SONAR_TOKEN
+        run: |
+          if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
+            echo "❌ SONAR_TOKEN is missing. Please configure it in repository secrets."
+            exit 1
+          fi
+
+      - name: Verify SONAR_PROJECT_KEY
+        run: |
+          if [ -z "${{ secrets.SONAR_PROJECT_KEY }}" ]; then
+            echo "❌ SONAR_PROJECT_KEY is missing. Please configure it in repository secrets."
+            exit 1
+          fi
+
+      - name: Verify SONAR_ORG
+        run: |
+          if [ -z "${{ secrets.SONAR_ORG }}" ]; then
+            echo "❌ SONAR_ORG is missing. Please configure it in repository secrets."
+            exit 1
+          fi
+
+  sonarcloud:
+    name: SonarCloud Analysis
+    needs: check-secrets
+    uses: Event-Based-Banking-Application/arya-banking-workflows/.github/workflows/sonar-report.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+      SONAR_ORG: ${{ secrets.SONAR_ORG }}
+      GH_PAT: ${{ secrets.GH_PAT }}

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  kafka:
+    image: ghcr.io/event-based-banking-application/arya-banking-kafka:latest
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+  schema-registry:
+    image: ghcr.io/event-based-banking-application/arya-banking-schema-registry:latest
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    volumes:
+      - schema-data:/var/lib/schema-registry/data
+
+volumes:
+  kafka-data:
+  schema-data:

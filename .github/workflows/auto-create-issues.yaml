@@ -1,0 +1,24 @@
+name: Auto Create Issues
+
+on:
+  workflow_dispatch: # No inputs needed - everything auto-detected!
+
+jobs:
+  create-issues:
+    uses: Event-Based-Banking-Application/arya-banking-workflows/.github/workflows/issue-creation.yaml@main
+    secrets:
+      gh_token: ${{ secrets.ORG_ISSUE_TOKEN }}
+
+  show-results:
+    needs: create-issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Results
+        run: |
+          echo "🎉 Issue Creation Complete!"
+          echo "📊 Services Processed: ${{ needs.create-issues.outputs.services_count }}"
+          echo "📝 Issues Created: ${{ needs.create-issues.outputs.issues_created }}"
+          echo "🎯 Milestones Created: ${{ needs.create-issues.outputs.milestones_created }}"
+          echo ""
+          echo "🔗 View issues at: https://github.com/${{ github.repository }}/issues"
+          echo "🔗 View milestones at: https://github.com/${{ github.repository }}/milestones"
