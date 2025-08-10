@@ -1,0 +1,56 @@
+server:
+  port: 8085
+
+app:
+  config:
+    keycloak:
+      url: http://localhost:5433/
+      realm: event-based-banking-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: arya-banking-api-gateway
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+            authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
+            user-name-attribute: preferred_username
+            user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+            user-info-authentication-method: header
+        registration:
+          banking-service-client:
+            provider: keycloak
+            client-id: banking-service-client
+            client-secret: FMrBssX0Lk92Uwep4zQitLIRChUfffGs
+            authorization-grant-type: authorization_code
+            redirect-uri: ${app.config.keycloak.url}/login/oauth2/code/keycloak
+            scope: openid
+
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/users/**
+
+        - id: auth-service
+          uri: http://localhost:9002
+          predicates:
+            - Path=/api/auth/**
+
+        # Add other microservice routes as needed
