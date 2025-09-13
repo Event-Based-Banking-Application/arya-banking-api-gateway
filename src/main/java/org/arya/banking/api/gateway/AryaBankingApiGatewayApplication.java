@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class AryaBankingApiGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(org.arya.banking.api.gateway.AryaBankingApiGatewayApplication.class, args);
+        SpringApplication.run(AryaBankingApiGatewayApplication.class, args);
     }
 
 }

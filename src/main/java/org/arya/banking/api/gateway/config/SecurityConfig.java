@@ -16,6 +16,7 @@ public class SecurityConfig {
 
         serverHttpSecurity.authorizeExchange(authorize ->
                 authorize.pathMatchers("/api/users/register", "/api/auth/authenticate").permitAll()
+                        .pathMatchers("/internal/**").hasAuthority("ROLE_INTERNAL_SERVICE")
                         .anyExchange().authenticated())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
 
