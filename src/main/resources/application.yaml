@@ -48,9 +48,14 @@ spring:
           predicates:
             - Path=/api/users/**
 
-        - id: auth-service
+        - id: auth-service-external
           uri: http://localhost:8087
           predicates:
             - Path=/api/auth/**
+
+        - id: auth-service-internal
+          uri: http://localhost:8087
+          predicates:
+            - Path=/internal/api/auth/**
 
         # Add other microservice routes as needed
