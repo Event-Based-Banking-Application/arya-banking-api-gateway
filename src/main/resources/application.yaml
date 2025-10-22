@@ -43,10 +43,15 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service-external
           uri: http://localhost:8086
           predicates:
             - Path=/api/users/**,/api/security-details/**
+
+        - id: user-service-internal
+          uri: http://localhost:8086
+          predicates:
+            - Path=/internal/api/security-details/**
 
         - id: auth-service-external
           uri: http://localhost:8087
