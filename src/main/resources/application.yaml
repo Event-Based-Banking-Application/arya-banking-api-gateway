@@ -58,4 +58,9 @@ spring:
           predicates:
             - Path=/internal/api/auth/**
 
+        - id: admin-service
+          uri: http://localhost:8089
+          predicates:
+            - Path=/api/admin/**
+
         # Add other microservice routes as needed
