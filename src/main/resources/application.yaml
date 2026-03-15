@@ -5,7 +5,7 @@ app:
   config:
     keycloak:
       url: http://localhost:5433/
-      realm: event-based-banking-service
+      realm: event-based-banking-application
 
 eureka:
   client:
