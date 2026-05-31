@@ -13,6 +13,10 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 spring:
+
+  config:
+    import: configserver:http://localhost:8090
+
   application:
     name: arya-banking-api-gateway
 
@@ -38,29 +42,4 @@ spring:
 
       resourceserver:
         jwt:
-          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
-
-  cloud:
-    gateway:
-      routes:
-        - id: user-service
-          uri: http://localhost:8086
-          predicates:
-            - Path=/api/users/**,/api/security-details/**
-
-        - id: auth-service-external
-          uri: http://localhost:8087
-          predicates:
-            - Path=/api/auth/**
-
-        - id: auth-service-internal
-          uri: http://localhost:8087
-          predicates:
-            - Path=/internal/api/auth/**
-
-        - id: admin-service
-          uri: http://localhost:8089
-          predicates:
-            - Path=/api/admin/**
-
-        # Add other microservice routes as needed
+          jwk-set-uri: ${app.config.keycloak.jwk-set-uri}
