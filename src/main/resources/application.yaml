@@ -15,7 +15,11 @@ eureka:
 spring:
 
   config:
-    import: configserver:http://localhost:8090
+    import: 'configserver:'
+
+  cloud:
+    config:
+      uri: http://localhost:8090
 
   application:
     name: arya-banking-api-gateway

@@ -1,0 +1,15 @@
+# Ignore build output and editor files
+target/
+.mvn/
+.m2/
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+*.md
+*.iml
+.idea/
+.vscode/
+logs/
+tmp/
+
