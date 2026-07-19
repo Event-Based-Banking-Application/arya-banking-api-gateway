@@ -15,7 +15,15 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity serverHttpSecurity) {
 
         serverHttpSecurity.authorizeExchange(authorize ->
-                authorize.pathMatchers("/api/users/register", "/api/auth/authenticate").permitAll()
+                authorize.pathMatchers(
+                                "/api/users/register",
+                                "/api/auth/authenticate",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "/user-service/**",
+                                "/auth-service/**",
+                                "/admin-service/**").permitAll()
                         .pathMatchers("/internal/**").hasAuthority("ROLE_INTERNAL_SERVICE")
                         .anyExchange().authenticated())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)

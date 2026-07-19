@@ -47,3 +47,14 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${app.config.keycloak.jwk-set-uri}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Admin Service
+        url: /admin-service/v3/api-docs
+      - name: Auth Service
+        url: /auth-service/v3/api-docs
+      - name: User Service
+        url: /user-service/v3/api-docs
