@@ -15,11 +15,12 @@ eureka:
 spring:
 
   config:
-    import: 'configserver:'
+    import: 'optional:configserver:'
 
   cloud:
     config:
       uri: http://localhost:8090
+      fail-fast: false
 
   application:
     name: arya-banking-api-gateway
@@ -46,7 +47,7 @@ spring:
 
       resourceserver:
         jwt:
-          jwk-set-uri: ${app.config.keycloak.jwk-set-uri}
+          jwk-set-uri: ${app.config.keycloak.url}realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
 
 springdoc:
   swagger-ui:
