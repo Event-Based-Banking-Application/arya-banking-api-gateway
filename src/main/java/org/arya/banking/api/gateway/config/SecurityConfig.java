@@ -18,7 +18,6 @@ public class SecurityConfig {
                 authorize.pathMatchers(
                                 "/api/users/register",
                                 "/api/auth/authenticate",
-                                "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/webjars/**",
