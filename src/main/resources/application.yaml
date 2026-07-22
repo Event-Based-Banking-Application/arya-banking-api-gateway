@@ -15,55 +15,11 @@ eureka:
 spring:
 
   config:
-    import: 'optional:configserver:'
+    import: 'configserver:'
 
   cloud:
     config:
       uri: http://localhost:8090
-      fail-fast: false
-
-    gateway:
-      routes:
-        - id: user-service
-          uri: lb://arya-banking-user-service
-          predicates:
-            - Path=/api/users/**,/api/security-details/**
-
-        - id: auth-service-external
-          uri: lb://arya-banking-auth-service
-          predicates:
-            - Path=/api/auth/**
-
-        - id: auth-service-internal
-          uri: lb://arya-banking-auth-service
-          predicates:
-            - Path=/internal/api/auth/**
-
-        - id: admin-service
-          uri: lb://arya-banking-admin-service
-          predicates:
-            - Path=/api/admin/**
-
-        - id: admin-service-api-docs
-          uri: lb://arya-banking-admin-service
-          predicates:
-            - Path=/admin-service/v3/api-docs
-          filters:
-            - RewritePath=/admin-service/v3/api-docs, /v3/api-docs
-
-        - id: auth-service-api-docs
-          uri: lb://arya-banking-auth-service
-          predicates:
-            - Path=/auth-service/v3/api-docs
-          filters:
-            - RewritePath=/auth-service/v3/api-docs, /v3/api-docs
-
-        - id: user-service-api-docs
-          uri: lb://arya-banking-user-service
-          predicates:
-            - Path=/user-service/v3/api-docs
-          filters:
-            - RewritePath=/user-service/v3/api-docs, /v3/api-docs
 
   application:
     name: arya-banking-api-gateway
@@ -90,7 +46,7 @@ spring:
 
       resourceserver:
         jwt:
-          jwk-set-uri: ${app.config.keycloak.url}realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+          jwk-set-uri: ${app.config.keycloak.jwk-set-uri}
 
 springdoc:
   swagger-ui:
