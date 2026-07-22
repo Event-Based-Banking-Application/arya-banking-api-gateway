@@ -34,12 +34,12 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAM }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/arya-banking-api-gateway:${{ github.ref_name }}
+          tags: ${{ secrets.DOCKERHUB_USERNAM }}/arya-banking-api-gateway:${{ github.ref_name }}
 
